@@ -54,6 +54,7 @@ npm run dev
 ```
 
 - Health: `GET http://localhost:3000/health`
+- Swagger UI: `GET http://localhost:3000/api-docs`
 - Swagger JSON: `GET http://localhost:3000/api-docs.json`
 
 ## MVP 우선 API

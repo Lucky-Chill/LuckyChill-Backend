@@ -1,5 +1,6 @@
 const { createSupabaseClient } = require("../lib/supabase");
 const { sendError } = require("../utils/response");
+const { isAllowedSchoolEmail } = require("../utils/emailDomain");
 
 async function requireAuth(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -14,6 +15,15 @@ async function requireAuth(req, res, next) {
 
   if (error || !data.user) {
     return sendError(res, 401, "UNAUTHORIZED", "유효하지 않은 토큰입니다.");
+  }
+
+  if (!isAllowedSchoolEmail(data.user.email)) {
+    return sendError(
+      res,
+      403,
+      "FORBIDDEN",
+      "가천대(@gachon.ac.kr) Google 계정만 이용할 수 있습니다."
+    );
   }
 
   req.user = data.user;

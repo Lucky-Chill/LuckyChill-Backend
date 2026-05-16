@@ -10,6 +10,7 @@
 |------|-----|
 | API Base URL (로컬) | `http://localhost:3000/api` |
 | Health Check | `http://localhost:3000/health` |
+| Swagger UI | `http://localhost:3000/api-docs` |
 | Swagger JSON | `http://localhost:3000/api-docs.json` |
 | 상세 API 명세 | 레포 내 `api-spec-mvp.md` |
 

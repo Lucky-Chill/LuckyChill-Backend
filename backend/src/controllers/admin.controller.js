@@ -2,11 +2,15 @@ const { keysToCamel } = require("../utils/caseMapper");
 const { sendSuccess, sendError } = require("../utils/response");
 const { intervalsOverlap } = require("../utils/scheduleUtils");
 
+function formatTimeValue(value) {
+  return typeof value === "string" ? value.slice(0, 5) : value;
+}
+
 async function getAdminReservations(req, res) {
   try {
-    const status = req.query.status || "PENDING";
+    const status = (req.query.status || "ALL").toUpperCase();
 
-    const { data, error } = await req.supabaseAdmin
+    let query = req.supabaseAdmin
       .from("reservations")
       .select(
         `
@@ -15,37 +19,65 @@ async function getAdminReservations(req, res) {
         start_time,
         end_time,
         title,
+        reason,
+        participant_info,
         applicant_name,
         applicant_department,
+        applicant_student_id,
+        applicant_phone,
         status,
-        classrooms ( name )
+        created_at,
+        user_id,
+        classrooms ( name, floor )
       `
       )
-      .eq("status", status)
-      .order("created_at", { ascending: true });
+      .order("created_at", { ascending: false });
+
+    if (status !== "ALL") {
+      query = query.eq("status", status);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error(error);
       return sendError(res, 500, "INTERNAL_SERVER_ERROR", "조회에 실패했습니다.");
     }
 
+    const emailByUserId = new Map();
+    const userIds = [...new Set((data || []).map((row) => row.user_id).filter(Boolean))];
+
+    if (userIds.length > 0) {
+      const { data: profiles, error: profileError } = await req.supabaseAdmin
+        .from("profiles")
+        .select("id, email")
+        .in("id", userIds);
+
+      if (!profileError && profiles) {
+        profiles.forEach((profile) => {
+          emailByUserId.set(profile.id, profile.email);
+        });
+      }
+    }
+
     const items = (data || []).map((row) =>
       keysToCamel({
         id: row.id,
         classroom_name: row.classrooms?.name,
+        classroom_floor: row.classrooms?.floor,
         reservation_date: row.reservation_date,
-        start_time:
-          typeof row.start_time === "string"
-            ? row.start_time.slice(0, 5)
-            : row.start_time,
-        end_time:
-          typeof row.end_time === "string"
-            ? row.end_time.slice(0, 5)
-            : row.end_time,
+        start_time: formatTimeValue(row.start_time),
+        end_time: formatTimeValue(row.end_time),
         title: row.title,
+        reason: row.reason,
+        participant_info: row.participant_info,
         applicant_name: row.applicant_name,
         applicant_department: row.applicant_department,
-        status: row.status
+        applicant_student_id: row.applicant_student_id,
+        applicant_phone: row.applicant_phone,
+        applicant_email: emailByUserId.get(row.user_id) ?? null,
+        status: row.status,
+        created_at: row.created_at
       })
     );
 

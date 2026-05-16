@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Wanted Sans';
+  src: url('./assets/fonts/WantedSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  src: url('./assets/fonts/WantedSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  src: url('./assets/fonts/WantedSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  src: url('./assets/fonts/WantedSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Wanted Sans', sans-serif;
+  --color-primary-white: #f9fafb;
+  --color-gachon-blue: #014f9e;
+  --color-gachon-light-blue: #b8d6f4;
+  --color-gachon-blue-tint: #dbeafe;
+  --color-middle-blue: #6998d1;
+  --color-mudang-red: #dc1b1b;
+  --color-mudang-red-tint: #ffc7c7;
+  --color-gachon-orange: #f1ab23;
+  --color-success-green: #00a63e;
+  --color-success-green-tint: #dcfce7;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4a5565;
+  --color-text-muted: #94a3b8;
+  --color-border-default: #e5e7eb;
+  --color-border-muted: #f0f0f0;
+  --color-surface-muted: #f8fafc;
+  --color-surface-soft: #f3f4f6;
+  --color-disabled-gray: #9ca3af;
+}
+
+body {
+  font-family: 'Wanted Sans', sans-serif;
+}
+
+@utility scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
