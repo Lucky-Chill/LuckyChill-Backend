@@ -1,0 +1,13 @@
+메모장에 복사해 둔 firebaseConfig를 이 파일 이름으로 저장하세요: firebase-config.txt
+
+예시 형식:
+const firebaseConfig = {
+  apiKey: "여기",
+  authDomain: "여기",
+  projectId: "여기",
+  storageBucket: "여기",
+  messagingSenderId: "여기",
+  appId: "여기"
+};
+
+저장 후 채팅에 "firebase-config.txt 넣었어" 라고 보내주시면 .env 값을 채워 드립니다.
