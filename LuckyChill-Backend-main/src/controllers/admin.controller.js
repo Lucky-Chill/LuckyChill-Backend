@@ -22,7 +22,7 @@ async function getAdminReservations(req, res) {
       `
       )
       .eq("status", status)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: true });
 
     if (error) {
       console.error(error);
