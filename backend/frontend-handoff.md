@@ -13,7 +13,7 @@
 | Swagger JSON | `http://localhost:3000/api-docs.json` |
 | 상세 API 명세 | 레포 내 `api-spec-mvp.md` |
 
-> 백엔드 서버 실행: 프로젝트 루트에서 `npm run dev`  
+> 백엔드 서버 실행: `backend` 폴더에서 `npm run dev`  
 > 프론트 연동 전에 백엔드 담당자에게 서버 실행 여부 확인
 
 ---
@@ -496,6 +496,7 @@ WHERE email = '관리자@이메일.com';
 ## 13. 백엔드 로컬 테스트 (참고)
 
 ```bash
+cd backend
 npm run dev
 npm run test:reservation
 ```
